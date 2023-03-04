@@ -1,0 +1,9 @@
+{
+  "root": true,
+  "extends": ["stratpoint/nodejs", "prettier"],
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  }
+}
