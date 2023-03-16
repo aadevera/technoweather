@@ -13,6 +13,17 @@ const host = process.env.HOST || 'localhost';
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+// database
+const db = require('src/database/models');
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log('Database is synced.');
+  })
+  .catch((err) => {
+    console.log('Failed to sync database: ' + err.message);
+  });
+
 app.use('/', require('src/routes')(express.Router()));
 
 app.listen(port, host, () => {
