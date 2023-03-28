@@ -3,6 +3,8 @@ require('dotenv').config();
 
 // imports
 const express = require('express');
+const { authRoute, countryRoute, continentRoute } = require('src/routes');
+const morgan = require('morgan');
 
 // constants
 const app = express();
@@ -12,6 +14,7 @@ const host = process.env.HOST || 'localhost';
 // middlewares
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(morgan('dev'));
 
 // database
 const db = require('src/database/models');
@@ -24,7 +27,14 @@ db.sequelize
     console.log('Failed to sync database: ' + err.message);
   });
 
-app.use('/', require('src/routes')(express.Router()));
+app.use('/auth', authRoute);
+app.use('/countries', countryRoute);
+app.use('/continents', continentRoute);
+
+// 404
+app.use((req, res) => {
+  res.status(404).json({ message: 'page not found' });
+});
 
 app.listen(port, host, () => {
   console.log(`Server running at ${host}:${port}`);

@@ -13,5 +13,6 @@ db.sequelize = sequelize;
  */
 db.continentModel = require('./continentModel.js')(sequelize, Sequelize);
 db.countryModel = require('./countryModel.js')(sequelize, Sequelize);
+db.userModel = require('./userModel.js')(sequelize, Sequelize);
 
 module.exports = db;
