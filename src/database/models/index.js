@@ -14,5 +14,13 @@ db.sequelize = sequelize;
 db.continentModel = require('./continentModel.js')(sequelize, Sequelize);
 db.countryModel = require('./countryModel.js')(sequelize, Sequelize);
 db.userModel = require('./userModel.js')(sequelize, Sequelize);
+db.cityModel = require('./cityModel.js')(sequelize, Sequelize);
+db.bookmarkModel = require('./bookmarkModel.js')(sequelize, Sequelize);
+
+Object.keys(db).forEach((modelName) => {
+  if (db[modelName].associate) {
+    db[modelName].associate(db);
+  }
+});
 
 module.exports = db;
