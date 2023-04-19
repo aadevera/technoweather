@@ -1,10 +1,12 @@
-require('dotenv').config();
+if (process.env.NODE_ENV === 'dev') {
+  require('dotenv').config();
+}
 
-const DB = process.env.MYSQL_DB || 'technoweather';
-const USERNAME = process.env.MYSQL_USERNAME || 'root';
-const PASSWORD = process.env.MYSQL_PASSWORD || 'root';
-const DIALECT = process.env.MYSQL_DIALECT || 'mysql';
-const HOST = process.env.HOST || 'localhost';
+const DB = process.env.MYSQL_DB;
+const USERNAME = process.env.MYSQL_USERNAME;
+const PASSWORD = process.env.MYSQL_PASSWORD;
+const DIALECT = process.env.MYSQL_DIALECT;
+const HOST = process.env.MYSQL_HOST;
 
 module.exports = {
   database: DB,

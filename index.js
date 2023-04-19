@@ -1,5 +1,7 @@
 // initialize environmental variables
-require('dotenv').config();
+if (process.env.NODE_ENV === 'dev') {
+  require('dotenv').config();
+}
 
 // imports
 const express = require('express');
