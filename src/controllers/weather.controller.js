@@ -1,4 +1,5 @@
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
+const NODE_ENV = process.env.NODE_ENV;
 const fetch = require('node-fetch');
 
 module.exports = {
@@ -12,7 +13,8 @@ module.exports = {
 
     const { weather, main, name, coord } = data;
     const description = weather[0].description;
-    const icon = `http://openweathermap.org/img/wn/${weather[0].icon}.png`;
+    const protocol = NODE_ENV === 'prod' ? 'https' : 'http';
+    const icon = `${protocol}://openweathermap.org/img/wn/${weather[0].icon}.png`;
 
     let infoWindow = ` 
     <h6 style="margin:0">${name}</h6>

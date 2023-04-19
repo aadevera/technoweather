@@ -40,7 +40,7 @@ app.use(
     secret: 'sessionsecret',
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 8 * 60 * 60 * 1000 },
+    cookie: { maxAge: 8 * 60 * 60 * 1000, secure: 'auto' },
   })
 );
 app.use(express.static('public'));
