@@ -207,8 +207,8 @@ async function populateCountry(event) {
 
   for (let country of countries) {
     let option = document.createElement('option');
-    option.textContent = country.name;
-    option.value = country.name;
+    option.textContent = country.country;
+    option.value = country.country;
     countrySelectElement.appendChild(option);
   }
 }

@@ -1,11 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
   const cityModel = sequelize.define('cities', {
-    id: {
-      type: Sequelize.BIGINT,
-      primaryKey: true,
-      allowNull: false,
-      autoIncrement: true,
-    },
     city: {
       type: Sequelize.STRING,
       allowNull: false,
@@ -42,6 +36,12 @@ module.exports = (sequelize, Sequelize) => {
     },
     population: {
       type: Sequelize.INTEGER,
+    },
+    id: {
+      type: Sequelize.BIGINT,
+      primaryKey: true,
+      allowNull: false,
+      autoIncrement: true,
     },
   });
 

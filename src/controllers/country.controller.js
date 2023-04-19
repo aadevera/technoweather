@@ -1,7 +1,11 @@
-const { countryModel } = require('src/database/models');
+const { cityModel } = require('src/database/models');
 
 module.exports = {
   getAll: async () => {
-    return await countryModel.findAll();
+    return await cityModel.findAll({
+      attributes: ['country'],
+      group: ['country'],
+      distinct: true,
+    });
   },
 };
