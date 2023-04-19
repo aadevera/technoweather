@@ -1,4 +1,5 @@
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
+const fetch = require('node-fetch');
 
 module.exports = {
   getWeatherByLatLon: async (req, res) => {
