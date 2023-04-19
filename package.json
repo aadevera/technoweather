@@ -6,6 +6,9 @@
   "repository": "git@github.com:aadevera/technoweather.git",
   "author": "Adrian de Vera <adr.cadv@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "dependencies": {
     "bcrypt": "^5.1.0",
     "ejs": "^3.1.9",
