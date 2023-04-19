@@ -40,7 +40,6 @@ app.use(
     secret: 'sessionsecret',
     resave: true,
     saveUninitialized: true,
-    cookie: { maxAge: 8 * 60 * 60 * 1000, secure: 'auto' },
   })
 );
 app.use(express.static('public'));
@@ -62,6 +61,10 @@ db.sequelize
 // views
 app.set('views', 'src/views');
 app.set('view engine', 'ejs');
+
+app.get('/', (req, res) => {
+  res.redirect('/home');
+});
 
 app.use('/home', (req, res) => {
   res.render('index', { user: req.session.user, APP_URL });
