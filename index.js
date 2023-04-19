@@ -29,7 +29,8 @@ const app = express();
 const port = process.env.PORT || '3000';
 const host = process.env.HOST || 'localhost';
 const NODE_ENV = process.env.NODE_ENV;
-const APP_URL = NODE_ENV === 'dev' ? 'http://localhost:3000' : '';
+const APP_URL =
+  NODE_ENV === 'dev' ? 'http://localhost:3000' : process.env.APP_URL;
 
 // middlewares
 app.use(express.urlencoded({ extended: true }));
