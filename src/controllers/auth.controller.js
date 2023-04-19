@@ -25,6 +25,7 @@ module.exports = {
         const token = jwt.sign({ data }, TOKENSECRET, { expiresIn: '1h' });
 
         req.session.user = data;
+        req.session.save();
 
         return {
           statusCode: 200,
