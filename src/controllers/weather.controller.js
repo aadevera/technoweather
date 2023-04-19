@@ -1,5 +1,4 @@
 const OPENWEATHER_API_KEY = process.env.OPENWEATHER_API_KEY;
-const APP_URL = process.env.NODE_ENV === 'dev' ? 'http://localhost:3000' : '';
 
 module.exports = {
   getWeatherByLatLon: async (req, res) => {
@@ -7,7 +6,6 @@ module.exports = {
 
     const url = `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${OPENWEATHER_API_KEY}&units=metric`;
     //const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
-    console.log(url);
     const result = await fetch(url);
     const data = await result.json();
 
