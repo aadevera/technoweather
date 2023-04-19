@@ -273,7 +273,6 @@ async function populateBookmarks() {
 async function createBookmark(event) {
   const access_token = localStorage.getItem('access-token');
   if (!access_token) return;
-  console.log(event.value);
   const body = JSON.parse(event.value);
 
   const options = {
@@ -288,9 +287,8 @@ async function createBookmark(event) {
   let response = await fetch(`${APP_URL}/api/bookmarks/create`, options);
   response = await response.json();
 
-  if (response.statusCode === 400) {
-    alert(response.message);
-  }
+  alert(response.message);
+  location.reload();
 }
 
 async function deleteBookmark(event) {
@@ -310,7 +308,8 @@ async function deleteBookmark(event) {
   response = await response.json();
 
   if (response.statusCode === 200) {
-    event.target.parentElement.remove();
+    alert(response.message);
+    event.parentElement.remove();
   }
 }
 
