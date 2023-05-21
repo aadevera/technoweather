@@ -2,20 +2,21 @@ if (process.env.NODE_ENV === 'dev') {
   require('dotenv').config();
 }
 
-const DB = process.env.MYSQL_DB;
-const USERNAME = process.env.MYSQL_USERNAME;
-const PASSWORD = process.env.MYSQL_PASSWORD;
-const DIALECT = process.env.MYSQL_DIALECT;
-const HOST = process.env.MYSQL_HOST;
+const {
+  SEQUELIZE_DIALECT,
+  SEQUELIZE_USERNAME,
+  SEQUELIZE_PASSWORD,
+  SEQUELIZE_HOST,
+  SEQUELIZE_PORT,
+  SEQUELIZE_DB,
+} = process.env;
 
 module.exports = {
-  database: DB,
-  username: USERNAME,
-  password: PASSWORD,
-  host: HOST,
-  dialect: DIALECT,
+  dialect: SEQUELIZE_DIALECT,
+  username: SEQUELIZE_USERNAME,
+  password: SEQUELIZE_PASSWORD,
+  host: SEQUELIZE_HOST,
+  port: SEQUELIZE_PORT,
+  database: SEQUELIZE_DB,
   logging: false,
-  define: {
-    timestamps: false,
-  },
 };
