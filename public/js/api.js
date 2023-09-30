@@ -92,16 +92,19 @@ document.getElementById('loginForm').addEventListener('submit', login);
 
 async function logout(event) {
   event.preventDefault();
-  localStorage.removeItem('access-token');
+
+  const access_token = localStorage.getItem('access-token');
+
   const options = {
     method: 'POST',
     headers: {
-      'content-type': 'application/json',
+      authorization: `Bearer ${access_token}`,
     },
   };
 
   const response = await fetch(`${APP_URL}/api/auth/logout`, options);
   if (response.status === 200) {
+    localStorage.removeItem('access-token');
     location.reload();
   }
 }
@@ -129,7 +132,7 @@ async function signup(event) {
     body,
   };
 
-  const response = await fetch(`${APP_URL}/api/auth/signup`, options);
+  const response = await fetch(`${APP_URL}/api/auth/register`, options);
   const responseJson = await response.json();
 
   setTimeout(() => {
@@ -148,10 +151,10 @@ async function citySelect(event) {
   const access_token = localStorage.getItem('access-token');
   if (!access_token) return;
 
-  const { id, lat, lng } = JSON.parse(event.target.value);
+  const { id, lat, lon } = JSON.parse(event.target.value);
   const coords = {
     lat: parseFloat(lat),
-    lng: parseFloat(lng),
+    lng: parseFloat(lon),
   };
   map.setCenter(coords);
   setInfoWindow(coords.lat, coords.lng);
@@ -179,11 +182,11 @@ async function countrySelect(event) {
 
   for (let city of cities) {
     let option = document.createElement('option');
-    option.textContent = city.city;
+    option.textContent = city.cityName;
     option.value = JSON.stringify({
       id: city.id,
       lat: city.lat,
-      lng: city.lng,
+      lon: city.lon,
     });
     citySelectElement.appendChild(option);
   }
@@ -207,8 +210,8 @@ async function populateCountry(event) {
 
   for (let country of countries) {
     let option = document.createElement('option');
-    option.textContent = country.country;
-    option.value = country.country;
+    option.textContent = country.name;
+    option.value = country.code;
     countrySelectElement.appendChild(option);
   }
 }
@@ -298,7 +301,7 @@ async function deleteBookmark(event) {
   const id = event.value;
 
   const options = {
-    method: 'POST',
+    method: 'DELETE',
     headers: {
       authorization: `Bearer ${access_token}`,
     },

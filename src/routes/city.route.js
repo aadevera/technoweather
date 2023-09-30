@@ -1,18 +1,17 @@
-const { cityController } = require('src/controllers');
-const { authMiddleware } = require('src/middlewares');
+const { cityController } = require('../controllers');
+const {
+  verifyToken,
+  //verifySession,
+} = require('../middlewares/auth.middleware');
 const router = require('express').Router();
 
-router.use(authMiddleware.verifyToken);
+router.use(verifyToken);
+//router.use(verifySession);
 
-// router.get('/countries', async (req, res) => {
-//   const response = await cityController.findAllCountries();
-//   return res.json(response);
-// });
-
-router.get('/:country', async (req, res) => {
-  const { country } = req.params;
-  const response = await cityController.findAllCityByCountry(country);
-  return res.json(response);
+router.get('/:countryCode', async (req, res) => {
+  const { countryCode } = req.params;
+  const response = await cityController.findAllCityByCountry(countryCode);
+  return res.status(response.statusCode).json(response.data);
 });
 
 module.exports = router;

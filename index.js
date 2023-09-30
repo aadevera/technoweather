@@ -18,7 +18,6 @@ morgan.token('body', function (req, res) {
 const {
   authRoute,
   countryRoute,
-  continentRoute,
   bookmarkRoute,
   cityRoute,
   weatherRoute,
@@ -55,7 +54,7 @@ db.sequelize
     console.log('Database is synced.');
   })
   .catch((err) => {
-    console.log('Failed to sync database: ' + err.message);
+    console.log('Failed to sync database: ' + err);
   });
 
 // views
@@ -73,7 +72,6 @@ app.use('/home', (req, res) => {
 // routes
 app.use('/api/auth', authRoute);
 app.use('/api/countries', countryRoute);
-app.use('/api/continents', continentRoute);
 app.use('/api/bookmarks', bookmarkRoute);
 app.use('/api/cities', cityRoute);
 app.use('/api/weather', weatherRoute);

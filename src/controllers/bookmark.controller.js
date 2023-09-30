@@ -1,20 +1,23 @@
-const { bookmarkModel, cityModel } = require('src/database/models');
+const { bookmarks } = require('../database/models');
 
 module.exports = {
-  findAllByUserID: async (userId) => {
+  findAllByUserID: async function (userId) {
+    // the user id is passed from the route
     try {
-      return await bookmarkModel.findAll({
+      const result = await bookmarks.findAll({
         where: { userId },
         order: [['id', 'DESC']],
       });
+
+      return { statusCode: 200, data: result };
     } catch (error) {
       console.log(error);
       throw new Error({ statusCode: 500, message: 'Internal Server Error.' });
     }
   },
-  create: async (userId, { lat, lon, name = 'unknown' }) => {
+  create: async function ({ userId, lat, lon, name }) {
     try {
-      const isExisting = await bookmarkModel.findOne({
+      const isExisting = await bookmarks.findOne({
         where: { userId, lat, lon },
       });
 
@@ -25,7 +28,7 @@ module.exports = {
         };
       }
 
-      const bookmarkCount = await bookmarkModel.count();
+      const bookmarkCount = await bookmarks.count();
       if (bookmarkCount >= 5) {
         return {
           statusCode: 400,
@@ -33,16 +36,16 @@ module.exports = {
         };
       }
 
-      await bookmarkModel.create({ userId, lat, lon, name });
+      await bookmarks.create({ userId, lat, lon, name });
       return { statusCode: 200, message: 'Bookmark successfully created.' };
     } catch (error) {
       console.log(error);
       throw new Error({ statusCode: 500, message: 'Internal Server Error.' });
     }
   },
-  delete: async (userId, bookmarkId) => {
+  delete: async function (userId, bookmarkId) {
     try {
-      await bookmarkModel.destroy({
+      await bookmarks.destroy({
         where: { userId, id: bookmarkId },
       });
       return { statusCode: 200, message: 'Bookmark successfully deleted' };

@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
-const { userModel } = require('src/database/models');
+const { users } = require('../database/models');
 const TOKENSECRET = process.env.TOKENSECRET;
 
-const verifyToken = async (req, res, next) => {
+const verifyToken = async function (req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader)
@@ -13,7 +13,7 @@ const verifyToken = async (req, res, next) => {
     const decoded = jwt.verify(bearerToken, TOKENSECRET);
 
     const { username, email } = decoded.data;
-    const user = await userModel.findOne({ where: { username, email } });
+    const user = await users.findOne({ where: { username, email } });
 
     if (!user)
       return res.status(403).json({ message: 'invalid/missing token' });
@@ -32,4 +32,16 @@ const verifyToken = async (req, res, next) => {
   }
 };
 
-module.exports = { verifyToken };
+const verifySession = async function (req, res, next) {
+  if (!req.session) {
+    return res.status(403).json({ message: 'invalid session' });
+  }
+
+  if (!req.session.user) {
+    return res.status(403).json({ message: 'invalid session' });
+  }
+
+  next();
+};
+
+module.exports = { verifyToken, verifySession };

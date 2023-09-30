@@ -1,35 +1,13 @@
-const { cityModel } = require('src/database/models');
+const { cities } = require('../database/models');
 
 module.exports = {
-  findAllCountries: async () => {
+  findAllCityByCountry: async function (countryCode) {
     try {
-      return await cityModel.findAll({
-        attributes: ['country'],
-        group: ['country'],
-        order: ['country', 'DESC'],
+      const result = await cities.findAll({
+        where: { countryCode },
+        order: [['cityName', 'ASC']],
       });
-    } catch (error) {
-      console.log(error);
-      throw new Error({ statusCode: 500, message: 'Internal Server Error.' });
-    }
-  },
-  findAllCityByCountry: async (country) => {
-    try {
-      return await cityModel.findAll({
-        where: { country },
-        order: [['cityAscii', 'ASC']],
-      });
-    } catch (error) {
-      console.log(error);
-      throw new Error({ statusCode: 500, message: 'Internal Server Error.' });
-    }
-  },
-  findCityByLatLng: async (lat, lng) => {
-    try {
-      return await cityModel.findAll({
-        where: { lat, lng },
-        order: [['cityAscii', 'ASC']],
-      });
+      return { statusCode: 200, data: result };
     } catch (error) {
       console.log(error);
       throw new Error({ statusCode: 500, message: 'Internal Server Error.' });

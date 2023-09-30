@@ -1,11 +1,13 @@
-const { cityModel } = require('src/database/models');
+const { countries } = require('../database/models');
 
 module.exports = {
-  getAll: async () => {
-    return await cityModel.findAll({
-      attributes: ['country'],
-      group: ['country'],
-      distinct: true,
-    });
+  getAllCountries: async function () {
+    try {
+      const result = await countries.findAll();
+      return { statusCode: 200, data: result };
+    } catch (error) {
+      console.log(error);
+      throw new Error({ statusCode: 500, message: 'Internal Server Error.' });
+    }
   },
 };

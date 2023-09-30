@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { userModel } = require('src/database/models');
+const { users } = require('src/database/models');
 const { Op } = require('sequelize');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     const { email, password } = req.body;
 
     try {
-      let user = await userModel.findOne({ where: { email }, plain: true });
+      let user = await users.findOne({ where: { email }, plain: true });
 
       if (user) {
         const verifyPassword = await bcrypt.compare(password, user.password);
@@ -53,7 +53,7 @@ module.exports = {
     if (!email) return { statusCode: 401, message: 'Email is required.' };
 
     try {
-      let findUser = await userModel.findOne({
+      let findUser = await users.findOne({
         where: { [Op.or]: [{ username }, { email }] },
       });
 
@@ -66,7 +66,7 @@ module.exports = {
 
       const SALT_ROUNDS = parseInt(process.env.BCRYPT_SALT_ROUNDS);
       const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-      await userModel.create({ username, password: hashedPassword, email });
+      await users.create({ username, password: hashedPassword, email });
 
       return { statusCode: 200, message: 'Sign Up Successful!' };
     } catch (error) {

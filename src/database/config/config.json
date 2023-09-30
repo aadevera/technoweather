@@ -1,0 +1,25 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "technoweather",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": "5435"
+  },
+  "dev": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "technoweather",
+    "host": "localhost",
+    "dialect": "postgres",
+    "port": "5435"
+  },
+  "prod": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "technoweather",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
